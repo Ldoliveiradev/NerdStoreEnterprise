@@ -1,13 +1,11 @@
 ﻿using NSE.WebApp.MVC.Models;
 using System;
 using System.Net.Http;
-using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace NSE.WebApp.MVC.Services
 {
-    public class AutenticacaoService : IAutenticacaoService
+    public class AutenticacaoService : Service, IAutenticacaoService
     {
         private readonly HttpClient _httpClient;
 
@@ -18,16 +16,19 @@ namespace NSE.WebApp.MVC.Services
 
         public async Task<UsuarioRespostaLogin> Login(UsuarioLogin usuarioLogin)
         {
-            var loginContent = new StringContent(JsonSerializer.Serialize(usuarioLogin), Encoding.UTF8, "application/json");
+            var loginContent = ObterConteudo(usuarioLogin);
 
             var response = await _httpClient.PostAsync("https://localhost:5001/api/identidade/autenticar", loginContent);
 
-            var options = new JsonSerializerOptions
+            if (!TratarErrosResponse(response))
             {
-                PropertyNameCaseInsensitive = true
-            };
+                return new UsuarioRespostaLogin
+                {
+                    ResponseResult = await DeserializarObjetoResponse<ResponseResult>(response)
+                };
+            }
 
-            return JsonSerializer.Deserialize<UsuarioRespostaLogin>(await response.Content.ReadAsStringAsync(), options);
+            return await DeserializarObjetoResponse<UsuarioRespostaLogin>(response);
         }
 
         public Task Logout()
@@ -42,11 +43,19 @@ namespace NSE.WebApp.MVC.Services
 
         public async Task<UsuarioRespostaLogin> Registro(UsuarioRegistro usuarioRegistro)
         {
-            var registroContent = new StringContent(JsonSerializer.Serialize(usuarioRegistro), Encoding.UTF8, "application/json");
+            var registroContent = ObterConteudo(usuarioRegistro);
 
             var response = await _httpClient.PostAsync("https://localhost:5001/api/identidade/nova-conta", registroContent);
 
-            return JsonSerializer.Deserialize<UsuarioRespostaLogin>(await response.Content.ReadAsStringAsync());
+            if (!TratarErrosResponse(response))
+            {
+                return new UsuarioRespostaLogin
+                {
+                    ResponseResult = await DeserializarObjetoResponse<ResponseResult>(response)
+                };
+            }
+
+            return await DeserializarObjetoResponse<UsuarioRespostaLogin>(response);
         }
     }
 }
