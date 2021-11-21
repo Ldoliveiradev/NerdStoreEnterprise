@@ -40,11 +40,11 @@ namespace NSE.Clientes.API.Application.Commands
 
                 RuleFor(c => c.Cpf)
                     .Must(TerCpfValido)
-                    .WithMessage("O CPF informado não é válido.");
+                    .WithMessage("O CPF informado não é válido");
 
                 RuleFor(c => c.Email)
                     .Must(TerEmailValido)
-                    .WithMessage("O e-mail informado não é válido.");
+                    .WithMessage("O e-mail informado não é válido");
             }
 
             protected static bool TerCpfValido(string cpf)
