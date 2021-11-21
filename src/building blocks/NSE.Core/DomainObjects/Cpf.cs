@@ -1,4 +1,4 @@
-﻿using NSE.Core.Util;
+﻿using NSE.Core.Utils;
 
 namespace NSE.Core.DomainObjects
 {
