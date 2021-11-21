@@ -20,7 +20,7 @@ namespace NSE.Clientes.API.Application.Commands
             Cpf = cpf;
         }
 
-        public override bool EhValido()
+        public override bool Validar()
         {
             ValidationResult = new RegistrarClienteValidation().Validate(this);
             return ValidationResult.IsValid;

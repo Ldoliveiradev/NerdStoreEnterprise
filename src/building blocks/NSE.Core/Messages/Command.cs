@@ -14,7 +14,7 @@ namespace NSE.Core.Messages
             Timestamp = DateTime.Now;
         }
 
-        public virtual bool EhValido()
+        public virtual bool Validar()
         {
             throw new NotImplementedException();
         }
