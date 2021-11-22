@@ -52,7 +52,7 @@ namespace NSE.WebApp.MVC.Configuration
             //    .AddTypedClient(Refit.RestService.For<ICatalogoServiceRefit>);
         }
 
-        public class PollyExtensions
+        public static class PollyExtensions
         {
             public static AsyncRetryPolicy<HttpResponseMessage> EsperarTentar()
             {
