@@ -16,7 +16,10 @@ namespace NSE.Bff.Compras.Controllers
         private readonly ICatalogoService _catalogoService;
         private readonly IPedidoService _pedidoService;
 
-        public CarrinhoController(ICarrinhoService carrinhoService, ICatalogoService catalogoService, IPedidoService pedidoService)
+        public CarrinhoController(
+            ICarrinhoService carrinhoService,
+            ICatalogoService catalogoService,
+            IPedidoService pedidoService)
         {
             _carrinhoService = carrinhoService;
             _catalogoService = catalogoService;
