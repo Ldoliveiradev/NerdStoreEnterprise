@@ -41,7 +41,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NSE.Clientes.API", "src\ser
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NSE.Pagamento.API", "src\services\NSE.Pagamento.API\NSE.Pagamento.API.csproj", "{43A432E4-5286-46DE-B33A-BCD33AF2D973}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NSE.Pedido.API", "src\services\NSE.Pedido.API\NSE.Pedido.API.csproj", "{8BC56616-BDBC-4B9C-8EA3-2CC2777842AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NSE.Pedidos.API", "src\services\NSE.Pedidos.API\NSE.Pedidos.API.csproj", "{8BC56616-BDBC-4B9C-8EA3-2CC2777842AA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{9027AB0E-127D-4C09-97FE-6F52D6A7A340}"
 EndProject
@@ -49,13 +49,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NSE.WebAPI.Core", "src\buil
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MessageBus", "MessageBus", "{AB2ADE29-077A-4C32-9FC0-2F31D750AC8C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSE.MessageBus", "src\building blocks\NSE.MessageBus\NSE.MessageBus.csproj", "{1391D469-4AA3-4C40-B960-96FCB69CAC17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NSE.MessageBus", "src\building blocks\NSE.MessageBus\NSE.MessageBus.csproj", "{1391D469-4AA3-4C40-B960-96FCB69CAC17}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateways", "ApiGateways", "{A6AE40D7-0BFD-46F3-B51C-9E9F1D52AA29}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Compras", "Compras", "{BA7167F4-9BB1-422F-92EE-81D4AD54A0E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSE.Bff.Compras", "src\api gateways\NSE.Bff.Compras\NSE.Bff.Compras.csproj", "{01BBFF35-813F-4576-AED8-B4C1ECC6D4DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NSE.Bff.Compras", "src\api gateways\NSE.Bff.Compras\NSE.Bff.Compras.csproj", "{01BBFF35-813F-4576-AED8-B4C1ECC6D4DB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NSE.Pedidos.Domain", "src\services\NSE.Pedidos.Domain\NSE.Pedidos.Domain.csproj", "{9E9A9A57-80F0-4799-8DC6-3D6307F1CFC9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSE.Pedidos.Infra", "src\services\NSE.Pedidos.Infra\NSE.Pedidos.Infra.csproj", "{F386AC6B-6858-46CA-9F26-5767693ED14A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -107,6 +111,14 @@ Global
 		{01BBFF35-813F-4576-AED8-B4C1ECC6D4DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01BBFF35-813F-4576-AED8-B4C1ECC6D4DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01BBFF35-813F-4576-AED8-B4C1ECC6D4DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E9A9A57-80F0-4799-8DC6-3D6307F1CFC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E9A9A57-80F0-4799-8DC6-3D6307F1CFC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E9A9A57-80F0-4799-8DC6-3D6307F1CFC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E9A9A57-80F0-4799-8DC6-3D6307F1CFC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F386AC6B-6858-46CA-9F26-5767693ED14A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F386AC6B-6858-46CA-9F26-5767693ED14A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F386AC6B-6858-46CA-9F26-5767693ED14A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F386AC6B-6858-46CA-9F26-5767693ED14A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -138,6 +150,8 @@ Global
 		{A6AE40D7-0BFD-46F3-B51C-9E9F1D52AA29} = {122EE13C-5C3A-4204-9AA8-519ADF6FF9BA}
 		{BA7167F4-9BB1-422F-92EE-81D4AD54A0E2} = {A6AE40D7-0BFD-46F3-B51C-9E9F1D52AA29}
 		{01BBFF35-813F-4576-AED8-B4C1ECC6D4DB} = {BA7167F4-9BB1-422F-92EE-81D4AD54A0E2}
+		{9E9A9A57-80F0-4799-8DC6-3D6307F1CFC9} = {938480E2-685C-49EA-951E-EFAE03A2C882}
+		{F386AC6B-6858-46CA-9F26-5767693ED14A} = {938480E2-685C-49EA-951E-EFAE03A2C882}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F0598881-C472-489B-BFAC-504F4B5986A7}
