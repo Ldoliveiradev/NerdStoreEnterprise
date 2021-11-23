@@ -37,7 +37,7 @@ namespace NSE.Carrinho.API.Services
             using var scope = _serviceProvider.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<CarrinhoContext>();
 
-            var carrinho = await context.CarrinhoCliente
+            var carrinho = await context.CarrinhoCliente.Include(i => i.Itens)
                 .FirstOrDefaultAsync(c => c.ClienteId == message.ClienteId);
 
             if (carrinho != null)
