@@ -7,8 +7,6 @@ namespace NSE.WebApp.MVC.Models
 {
     public class PedidoTransacaoViewModel
     {
-        #region Pedido
-
         public decimal ValorTotal { get; set; }
         public decimal Desconto { get; set; }
         public string VoucherCodigo { get; set; }
@@ -16,15 +14,7 @@ namespace NSE.WebApp.MVC.Models
 
         public List<ItemCarrinhoViewModel> Itens { get; set; } = new List<ItemCarrinhoViewModel>();
 
-        #endregion
-
-        #region Endereco
-
         public EnderecoViewModel Endereco { get; set; }
-
-        #endregion
-
-        #region Cartão
 
         [Required(ErrorMessage = "Informe o número do cartão")]
         [DisplayName("Número do Cartão")]
@@ -43,7 +33,5 @@ namespace NSE.WebApp.MVC.Models
         [Required(ErrorMessage = "Informe o código de segurança")]
         [DisplayName("Código de Segurança")]
         public string CvvCartao { get; set; }
-
-        #endregion
     }
 }

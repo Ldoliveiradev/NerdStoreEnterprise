@@ -37,8 +37,6 @@ namespace NSE.WebApp.MVC.Services
             _httpClient.BaseAddress = new Uri(settings.Value.ComprasBffUrl);
         }
 
-        #region Carrinho
-
         public async Task<CarrinhoViewModel> ObterCarrinho()
         {
             var response = await _httpClient.GetAsync("/compras/carrinho/");
@@ -92,11 +90,7 @@ namespace NSE.WebApp.MVC.Services
             if (!TratarErrosResponse(response)) return await DeserializarObjetoResponse<ResponseResult>(response);
 
             return RetornoOk();
-        }
-
-        #endregion
-
-        #region Pedido
+        }        
 
         public async Task<ResponseResult> FinalizarPedido(PedidoTransacaoViewModel pedidoTransacao)
         {
@@ -154,7 +148,5 @@ namespace NSE.WebApp.MVC.Services
 
             return pedido;
         }
-
-        #endregion
     }
 }
