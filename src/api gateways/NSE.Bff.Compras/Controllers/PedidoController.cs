@@ -18,7 +18,7 @@ namespace NSE.Bff.Compras.Controllers
         private readonly IPedidoService _pedidoService;
         private readonly IClienteService _clienteService;
 
-        public PedidoController(ICatalogoService catalogoService, ICarrinhoService carrinhoService, 
+        public PedidoController(ICatalogoService catalogoService, ICarrinhoService carrinhoService,
             IPedidoService pedidoService, IClienteService clienteService)
         {
             _catalogoService = catalogoService;
@@ -46,6 +46,7 @@ namespace NSE.Bff.Compras.Controllers
         public async Task<IActionResult> UltimoPedido()
         {
             var pedido = await _pedidoService.ObterUltimoPedido();
+
             if (pedido is null)
             {
                 AdicionarErroProcessamento("Pedido não encontrado!");
@@ -72,6 +73,7 @@ namespace NSE.Bff.Compras.Controllers
                 foreach (var itemId in itensIndisponiveis)
                 {
                     var itemCarrinho = carrinho.Itens.FirstOrDefault(c => c.ProdutoId == itemId);
+
                     AdicionarErroProcessamento($"O item {itemCarrinho.Nome} não está mais disponível no catálogo, o remova do carrinho para prosseguir com a compra");
                 }
 
@@ -91,6 +93,7 @@ namespace NSE.Bff.Compras.Controllers
                     AdicionarErroProcessamento(msgErro);
 
                     var responseRemover = await _carrinhoService.RemoverItemCarrinho(itemCarrinho.ProdutoId);
+
                     if (ResponsePossuiErros(responseRemover))
                     {
                         AdicionarErroProcessamento($"Não foi possível remover automaticamente o produto {itemCarrinho.Nome} do seu carrinho, _" +
@@ -99,6 +102,7 @@ namespace NSE.Bff.Compras.Controllers
                     }
 
                     itemCarrinho.Valor = produtoCatalogo.Valor;
+
                     var responseAdicionar = await _carrinhoService.AdicionarItemCarrinho(itemCarrinho);
 
                     if (ResponsePossuiErros(responseAdicionar))
