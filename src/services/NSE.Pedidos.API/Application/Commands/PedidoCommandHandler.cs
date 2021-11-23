@@ -15,8 +15,8 @@ namespace NSE.Pedidos.API.Application.Commands
     public class PedidoCommandHandler : CommandHandler,
         IRequestHandler<AdicionarPedidoCommand, ValidationResult>
     {
-        private readonly IPedidoRepository _pedidoRepository;
         private readonly IVoucherRepository _voucherRepository;
+        private readonly IPedidoRepository _pedidoRepository;
 
         public PedidoCommandHandler(IVoucherRepository voucherRepository, IPedidoRepository pedidoRepository)
         {
@@ -70,6 +70,7 @@ namespace NSE.Pedidos.API.Application.Commands
             if (!message.VoucherUtilizado) return true;
 
             var voucher = await _voucherRepository.ObterVoucherPorCodigo(message.VoucherCodigo);
+
             if (voucher == null)
             {
                 AdicionarErro("O voucher informado não existe!");
@@ -77,6 +78,7 @@ namespace NSE.Pedidos.API.Application.Commands
             }
 
             var voucherValidation = new VoucherValidation().Validate(voucher);
+
             if (!voucherValidation.IsValid)
             {
                 voucherValidation.Errors.ToList().ForEach(m => AdicionarErro(m.ErrorMessage));
