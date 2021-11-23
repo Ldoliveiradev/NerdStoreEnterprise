@@ -39,7 +39,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NSE.Catalogo.API", "src\ser
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NSE.Clientes.API", "src\services\NSE.Clientes.API\NSE.Clientes.API.csproj", "{680C7A27-EAA9-4035-9206-44C779B7DCF8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NSE.Pagamento.API", "src\services\NSE.Pagamento.API\NSE.Pagamento.API.csproj", "{43A432E4-5286-46DE-B33A-BCD33AF2D973}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NSE.Pagamentos.API", "src\services\NSE.Pagamentos.API\NSE.Pagamentos.API.csproj", "{43A432E4-5286-46DE-B33A-BCD33AF2D973}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NSE.Pedidos.API", "src\services\NSE.Pedidos.API\NSE.Pedidos.API.csproj", "{8BC56616-BDBC-4B9C-8EA3-2CC2777842AA}"
 EndProject
@@ -59,7 +59,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NSE.Bff.Compras", "src\api 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NSE.Pedidos.Domain", "src\services\NSE.Pedidos.Domain\NSE.Pedidos.Domain.csproj", "{9E9A9A57-80F0-4799-8DC6-3D6307F1CFC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSE.Pedidos.Infra", "src\services\NSE.Pedidos.Infra\NSE.Pedidos.Infra.csproj", "{F386AC6B-6858-46CA-9F26-5767693ED14A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NSE.Pedidos.Infra", "src\services\NSE.Pedidos.Infra\NSE.Pedidos.Infra.csproj", "{F386AC6B-6858-46CA-9F26-5767693ED14A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSE.Pagamentos.NerdsPag", "src\services\NSE.Pagamentos.NerdsPag\NSE.Pagamentos.NerdsPag.csproj", "{DBE068B7-997E-40F6-A63C-B0D2C8D893D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -119,6 +121,10 @@ Global
 		{F386AC6B-6858-46CA-9F26-5767693ED14A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F386AC6B-6858-46CA-9F26-5767693ED14A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F386AC6B-6858-46CA-9F26-5767693ED14A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBE068B7-997E-40F6-A63C-B0D2C8D893D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBE068B7-997E-40F6-A63C-B0D2C8D893D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBE068B7-997E-40F6-A63C-B0D2C8D893D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBE068B7-997E-40F6-A63C-B0D2C8D893D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -152,6 +158,7 @@ Global
 		{01BBFF35-813F-4576-AED8-B4C1ECC6D4DB} = {BA7167F4-9BB1-422F-92EE-81D4AD54A0E2}
 		{9E9A9A57-80F0-4799-8DC6-3D6307F1CFC9} = {938480E2-685C-49EA-951E-EFAE03A2C882}
 		{F386AC6B-6858-46CA-9F26-5767693ED14A} = {938480E2-685C-49EA-951E-EFAE03A2C882}
+		{DBE068B7-997E-40F6-A63C-B0D2C8D893D1} = {399E9EB7-2250-4E99-A25F-1D6164D29554}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F0598881-C472-489B-BFAC-504F4B5986A7}
