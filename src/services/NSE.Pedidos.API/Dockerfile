@@ -7,7 +7,7 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["src/services/NSE.Pedidos.API/NSE.Pedido.API.csproj", "src/services/NSE.Pedidos.API/"]
+COPY ["src/services/NSE.Pedidos.API/NSE.Pedidos.API.csproj", "src/services/NSE.Pedidos.API/"]
 RUN dotnet restore "src/services/NSE.Pedidos.API/NSE.Pedidos.API.csproj"
 COPY . .
 WORKDIR "/src/src/services/NSE.Pedidos.API"
