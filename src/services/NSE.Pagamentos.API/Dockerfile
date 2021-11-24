@@ -7,7 +7,7 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["src/services/NSE.Pagamentos.API/NSE.Pagamento.API.csproj", "src/services/NSE.Pagamentos.API/"]
+COPY ["src/services/NSE.Pagamentos.API/NSE.Pagamentos.API.csproj", "src/services/NSE.Pagamentos.API/"]
 RUN dotnet restore "src/services/NSE.Pagamentos.API/NSE.Pagamentos.API.csproj"
 COPY . .
 WORKDIR "/src/src/services/NSE.Pagamentos.API"
