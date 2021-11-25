@@ -49,3 +49,4 @@ services:
             - ASPNETCORE_URLS=http://+5400
         depends_on:
             - rabbitmq
+            - sql-server
