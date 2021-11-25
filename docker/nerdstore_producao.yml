@@ -1,9 +1,19 @@
 version: "3"
 
 services:
+    rabbitmq:
+        image: rabbitmq:3-management
+        container_name: rabbit-nerdstore
+        ports:
+           - "5678:5672"
+           - "15678:15672"
+        environment:
+            RABBITMQ_DEFAULT_USER: "nerdstore"
+            RABBITMQ_DEFAULT_PASS: "nerdstore"
 
     web-mvc:
         image: desenvolvedorio/nerdstore-web-mvc-ecommerce:latest
+        container_name: nerdstore-web-mvc-ecommerce
         build:
             context: ../src
             dockerfile: ./web/NSE.WebApp.MVC/Dockerfile
@@ -13,3 +23,18 @@ services:
         environment:
             - ASPNETCORE_ENVIRONMENT=Production
             - ASPNETCORE_URLS=http://*:5300
+        depends_on:
+            - api-catalogo
+
+    api-catalogo:
+        image: desenvolvedorio/nerdstore-api-catalogo:latest
+        container_name: nerdstore-api-catalogo
+        build: 
+            context: ../src
+            dockerfile: ./services/NSE.Catalogo.API/Dockerfile
+        restart: always 
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=https://+:5401;http://+5400
+        depends_on:
+            - rabbitmq
