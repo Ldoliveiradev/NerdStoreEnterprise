@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+
+    web-mvc:
+        image: desenvolvedorio/nerdstore-web-mvc-ecommerce:latest
+        build:
+            context: ../src
+            dockerfile: ./web/NSE.WebApp.MVC/Dockerfile
+        ports:
+            - "5300:5300"
+        restart: always            
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=http://*:5300
