@@ -6,7 +6,6 @@ using NetDevPack.Security.Jwt;
 using NetDevPack.Security.Jwt.Store.EntityFrameworkCore;
 using NSE.Identidade.API.Data;
 using NSE.Identidade.API.Extensions;
-using NSE.WebAPI.Core.Identidade;
 
 namespace NSE.Identidade.API.Configuration
 {
@@ -25,8 +24,6 @@ namespace NSE.Identidade.API.Configuration
                 .AddErrorDescriber<IdentityMensagensPortugues>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-
-            services.AddJwtConfiguration(configuration);
 
             return services;
         }

@@ -78,8 +78,7 @@ namespace NSE.Identidade.API.Services
             return tokenHandler.WriteToken(token);
         }
 
-        private UsuarioRespostaLogin ObterRespostaToken(string encodedToken, IdentityUser user,
-            IEnumerable<Claim> claims)
+        private UsuarioRespostaLogin ObterRespostaToken(string encodedToken, IdentityUser user, IEnumerable<Claim> claims)
         {
             return new UsuarioRespostaLogin
             {
