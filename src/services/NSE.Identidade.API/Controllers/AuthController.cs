@@ -97,5 +97,25 @@ namespace NSE.Identidade.API.Controllers
                 throw;
             }
         }
+
+        [HttpPost("refresh-token")]
+        public async Task<ActionResult> RefreshToken([FromBody] string refreshToken)
+        {
+            if (string.IsNullOrEmpty(refreshToken))
+            {
+                AdicionarErroProcessamento("Refresh Token inválido");
+                return CustomResponse();
+            }
+
+            var token = await _authenticationService.ObterRefreshToken(Guid.Parse(refreshToken));
+
+            if (token is null)
+            {
+                AdicionarErroProcessamento("Refresh Token expirado");
+                return CustomResponse();
+            }
+
+            return CustomResponse(await _authenticationService.GerarJwt(token.Username));
+        }
     }
 }

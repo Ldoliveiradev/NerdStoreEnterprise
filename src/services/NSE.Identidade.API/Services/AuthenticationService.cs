@@ -1,7 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using NetDevPack.Security.Jwt.Interfaces;
+using NSE.Identidade.API.Data;
+using NSE.Identidade.API.Extensions;
 using NSE.Identidade.API.Models;
+using NSE.WebAPI.Core.Identidade;
 using NSE.WebAPI.Core.Usuario;
 using System;
 using System.Collections.Generic;
@@ -16,17 +21,24 @@ namespace NSE.Identidade.API.Services
     {
         public readonly SignInManager<IdentityUser> SignInManager;
         public readonly UserManager<IdentityUser> UserManager;
+        private readonly AppSettings _appSettings;
+        private readonly AppTokenSettings _appTokenSettingsSettings;
+        private readonly ApplicationDbContext _context;
 
         private readonly IJsonWebKeySetService _jwksService;
         private readonly IAspNetUser _aspNetUser;
 
         public AuthenticationService(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager,
-            IJsonWebKeySetService jwksService, IAspNetUser aspNetUser)
+            IOptions<AppSettings> appSettings, IOptions<AppTokenSettings> appTokenSettingsSettings,
+            ApplicationDbContext context, IJsonWebKeySetService jwksService, IAspNetUser aspNetUser)
         {
             SignInManager = signInManager;
             UserManager = userManager;
+            _appSettings = appSettings.Value;
+            _appTokenSettingsSettings = appTokenSettingsSettings.Value;
             _jwksService = jwksService;
             _aspNetUser = aspNetUser;
+            _context = context;
         }
 
         public async Task<UsuarioRespostaLogin> GerarJwt(string email)
@@ -37,7 +49,9 @@ namespace NSE.Identidade.API.Services
             var identityClaims = await ObterClaimsUsuario(claims, user);
             var encodedToken = CodificarToken(identityClaims);
 
-            return ObterRespostaToken(encodedToken, user, claims);
+            var refreshToken = await GerarRefreshToken(email);
+
+            return ObterRespostaToken(encodedToken, user, claims, refreshToken);
         }
 
         private async Task<ClaimsIdentity> ObterClaimsUsuario(ICollection<Claim> claims, IdentityUser user)
@@ -78,11 +92,13 @@ namespace NSE.Identidade.API.Services
             return tokenHandler.WriteToken(token);
         }
 
-        private UsuarioRespostaLogin ObterRespostaToken(string encodedToken, IdentityUser user, IEnumerable<Claim> claims)
+        private UsuarioRespostaLogin ObterRespostaToken(string encodedToken, IdentityUser user,
+            IEnumerable<Claim> claims, RefreshToken refreshToken)
         {
             return new UsuarioRespostaLogin
             {
                 AccessToken = encodedToken,
+                RefreshToken = refreshToken.Token,
                 ExpiresIn = TimeSpan.FromHours(1).TotalSeconds,
                 UsuarioToken = new UsuarioToken
                 {
@@ -95,5 +111,29 @@ namespace NSE.Identidade.API.Services
 
         private static long ToUnixEpochDate(DateTime date)
             => (long)Math.Round((date.ToUniversalTime() - new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero)).TotalSeconds);
+
+        private async Task<RefreshToken> GerarRefreshToken(string email)
+        {
+            var refreshToken = new RefreshToken
+            {
+                Username = email,
+                ExpirationDate = DateTime.UtcNow.AddHours(_appTokenSettingsSettings.RefreshTokenExpiration)
+            };
+
+            _context.RefreshTokens.RemoveRange(_context.RefreshTokens.Where(u => u.Username == email));
+            await _context.RefreshTokens.AddAsync(refreshToken);
+
+            await _context.SaveChangesAsync();
+
+            return refreshToken;
+        }
+
+        public async Task<RefreshToken> ObterRefreshToken(Guid refreshToken)
+        {
+            var token = await _context.RefreshTokens.AsNoTracking()
+                .FirstOrDefaultAsync(u => u.Token == refreshToken);
+
+            return token != null && token.ExpirationDate.ToLocalTime() > DateTime.Now ? token : null;
+        }
     }
 }
