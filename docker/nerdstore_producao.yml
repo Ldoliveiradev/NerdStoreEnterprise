@@ -15,6 +15,8 @@ services:
     sql-server:
         image: desenvolvedorio/nerdstore-sql-server:latest
         container_name: nerdstore-sql-server
+        ports:
+            - "1436:1433"
         build: 
             context: ../sql
             dockerfile: ./Dockerfile
@@ -36,6 +38,42 @@ services:
             - ASPNETCORE_URLS=http://*:5300
         depends_on:
             - api-catalogo
+            - api-identidade
+            - api-cliente
+            - api-bff-compras
+
+    api-identidade:
+        image: desenvolvedorio/nerdstore-api-identidade:latest
+        container_name: nerdstore-api-identidade    
+        build: 
+            context: ../src
+            dockerfile: ./services/NSE.Identidade.API/Dockerfile 
+        ports:
+            - "5130:5130" 
+        restart: always    
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=http://*:5130
+        depends_on:
+            - rabbitmq
+            - sql-server
+
+    api-carrinho:
+        image: desenvolvedorio/nerdstore-api-carrinho:latest
+        container_name: nerdstore-api-carrinho
+        build: 
+            context: ../src
+            dockerfile: ./services/NSE.Carrinho.API/Dockerfile      
+        restart: always  
+        ports:
+            - "5600:5600"            
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=http://*:5600
+        depends_on:
+            - rabbitmq
+            - api-identidade
+            - sql-server 
 
     api-catalogo:
         image: desenvolvedorio/nerdstore-api-catalogo:latest
@@ -44,9 +82,82 @@ services:
             context: ../src
             dockerfile: ./services/NSE.Catalogo.API/Dockerfile
         restart: always 
+        ports:
+            - "5400:5400"
         environment: 
             - ASPNETCORE_ENVIRONMENT=Production
-            - ASPNETCORE_URLS=http://+5400
+            - ASPNETCORE_URLS=http://*:5400
         depends_on:
             - rabbitmq
             - sql-server
+
+    api-cliente:
+        image: desenvolvedorio/nerdstore-api-cliente:latest
+        container_name: nerdstore-api-cliente    
+        build: 
+            context: ../src
+            dockerfile: ./services/NSE.Clientes.API/Dockerfile
+        restart: always 
+        ports:
+            - "5500:5500"
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=http://*:5500
+        depends_on:
+            - rabbitmq
+            - api-identidade
+            - sql-server  
+
+    api-bff-compras:
+        image: desenvolvedorio/nerdstore-api-bff-compras:latest
+        container_name: nerdstore-api-bff-compras
+        build: 
+            context: ../src
+            dockerfile: ./api gateways/NSE.Bff.Compras/Dockerfile  
+        restart: always 
+        ports:
+            - "5700:5700"
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=http://*:5700
+        depends_on:
+            - rabbitmq
+            - api-identidade
+            - api-carrinho
+            - api-pagamento
+            - api-pedido
+
+    api-pagamento:
+        image: desenvolvedorio/nerdstore-api-pagamento:latest
+        container_name: nerdstore-api-pagamento    
+        build: 
+            context: ../src
+            dockerfile: ./services/NSE.Pagamentos.API/Dockerfile
+        restart: always   
+        ports:
+            - "5900:5900" 
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=http://*:5900
+        depends_on:
+            - rabbitmq
+            - api-identidade
+            - api-pedido
+            - sql-server
+
+    api-pedido:
+        image: desenvolvedorio/nerdstore-api-pedido:latest
+        container_name: nerdstore-api-pedido    
+        build: 
+            context: ../src
+            dockerfile: ./services/NSE.Pedidos.API/Dockerfile 
+        restart: always 
+        ports:
+            - "5800:5800"             
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=http://*:5800
+        depends_on:
+            - rabbitmq
+            - sql-server
+            - api-identidade 
