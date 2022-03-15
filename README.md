@@ -4,7 +4,7 @@ Projeto e-commerce do curso feito no Desenvolvedor.io chamado ASP.NET Core Enter
 # Introdução
 Aplicações N camadas utilizando uma arquitetura robusta modelada com DDD, CQRS e EventSourcing.
 
-#Comando para rodar o projeto no docker
+# Comando para rodar o projeto no docker
 Acessar diretório docker e executar o comando abaixo:
 docker-compose -f nerdstore_producao.yml up -d
 
